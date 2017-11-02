@@ -1,3 +1,8 @@
+{{#if errors}}
+	{{#each errors}}
+	<div class="alert alert-danger">{{msg}}</div>
+	{{/each}}
+{{/if}}
 <div class="container">
 	<div class="row main">
 		<div class="panel-heading">
@@ -7,8 +12,7 @@
 			</div>
 		</div> 
 		<div class="main-login main-center">
-			<form class="form-horizontal" method="post" action="#">
-				
+			<form class="form-horizontal" method="post" action="/users/register">
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Your Name</label>
 					<div class="cols-sm-10">
@@ -18,7 +22,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<label for="email" class="cols-sm-2 control-label">Your Email</label>
 					<div class="cols-sm-10">
@@ -28,7 +31,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<label for="username" class="cols-sm-2 control-label">Username</label>
 					<div class="cols-sm-10">
@@ -38,7 +40,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<label for="password" class="cols-sm-2 control-label">Password</label>
 					<div class="cols-sm-10">
@@ -48,7 +49,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
 					<div class="cols-sm-10">
@@ -60,11 +60,11 @@
 				</div>
 
 				<div class="form-group ">
-					<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
 				</div>
 				<div class="login-register">
-					<a href="index.php">Login</a>
-					</div>
+					<a href="/users/login">Login</a>
+				</div>
 			</form>
 		</div>
 	</div>

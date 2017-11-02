@@ -95,7 +95,8 @@ body, html{
 }
 
 .main{
- 	margin-top: 70px;
+   margin-top: 70px;
+   margin-bottom: 70px;
 }
 
 h1.title { 
@@ -138,7 +139,7 @@ input::-webkit-input-placeholder {
 .main-center{
  	margin-top: 30px;
  	margin: 0 auto;
- 	max-width: 330px;
+ 	max-width: 500px;
     padding: 40px 40px;
 
 }
@@ -150,6 +151,10 @@ input::-webkit-input-placeholder {
 .login-register{
 	font-size: 11px;
 	text-align: center;
+}
+
+.row {
+  display: inherit;
 }
 
 /*Login Styles*/
@@ -191,3 +196,7 @@ input::-webkit-input-placeholder {
   .btn-facebook.active {
       background-color: #0d2456 \9 !important;
   }
+
+footer.fiiter {
+    margin-top: 30px;
+}
