@@ -30,10 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //express session
 app.use(session({
-    secret: 'secret',
+    secret: 'SECRET',
     saveUninitialized: true,
     resave: true
 }));
+
 
 //passport initialization
 app.use(passport.initialize());

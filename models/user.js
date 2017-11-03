@@ -17,8 +17,6 @@ var  userSchema = mongoose.Schema({
     }
 });
 
-
-
 var User = module.exports = mongoose.model('User', userSchema);
 
 
@@ -35,7 +33,7 @@ module.exports.createUser = function(newUser, callback) {
 }
 
 module.exports.getUserByUsername = function(username, callback) {
-    console.log("GetUserByUsernam was executed from the model file");
+    console.log("GetUserByUsername was executed from the model file");
     var query = {username: username};
     User.findOne(query, callback);
 }

@@ -65,9 +65,22 @@ router.post('/register', function(req, res) {
 
 //Local Strategy
 
+passport.serializeUser(function(user, done) {
+    console.log("Serializer was used");
+    done(null, user.id);
+});
+  
+passport.deserializeUser(function(id, done) {
+    console.log("Deserializer was used");    
+    user.getUserById(id, function(err, user) {
+      done(err, user);
+    });
+});
+
 passport.use(new localStrategy(
     function(username, password, done) {
         console.log("Local Strategy was executed");
+        console.log(`User.password is ${User.password}`)
         User.getUserByUsername(username, function(err, user) {
             // console.log(`username is ${username}`);
             if (err) throw err;
@@ -88,18 +101,6 @@ passport.use(new localStrategy(
     }
 ));
 
-
-passport.serializeUser(function(user, done) {
-    console.log("Serializer was used");
-    done(null, user.id);
-});
-  
-passport.deserializeUser(function(id, done) {
-    console.log("Deserializer was used");    
-    user.getUserById(id, function(err, user) {
-      done(err, user);
-    });
-});
 
 //Post Request to Login
 router.post('/login',
