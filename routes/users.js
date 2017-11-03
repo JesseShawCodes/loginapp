@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 
 var User =  require('../models/user')
 
-var hash = bcrypt.hashSync('bacon', 100);
+var hash = bcrypt.hashSync('bacon', 10);
 console.log(hash);
 
 //register route
@@ -72,7 +72,7 @@ passport.use(new localStrategy(
             // console.log(`username is ${username}`);
             if (err) throw err;
             if (!user) {
-                return done(hull, false, {message: "unknown user"});
+                return done(null, false, {message: "unknown user"});
             }
         })
         User.comparePassword(password, User.password, function(err, isMatch) {
@@ -108,5 +108,11 @@ router.post('/login',
         console.log("User attempted login");
         res.redirect('/');
 });
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/users/login');
+})
 
 module.exports = router; 

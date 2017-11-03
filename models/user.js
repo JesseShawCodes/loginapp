@@ -36,7 +36,7 @@ module.exports.createUser = function(newUser, callback) {
 
 module.exports.getUserByUsername = function(username, callback) {
     console.log("GetUserByUsernam was executed from the model file");
-    let query = {username: username};
+    var query = {username: username};
     User.findOne(query, callback);
 }
 
