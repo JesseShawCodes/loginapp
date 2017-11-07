@@ -19,6 +19,7 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
+    "mongo-express": "^0.43.1",
     "mongodb": "^2.2.33",
     "mongoose": "^4.12.5",
     "passport": "^0.4.0",

@@ -1,5 +1,9 @@
+const mongo = require('mongodb');
 const mongoose = require('mongoose');
+
 const bcrypt = require('bcryptjs');
+
+
 
 var  userSchema = mongoose.Schema({
     username: {
@@ -17,14 +21,14 @@ var  userSchema = mongoose.Schema({
     }
 });
 
-var User = module.exports = mongoose.model('User', userSchema);
+var User = module.exports = mongoose.model('users', userSchema);
 
 
 //Password encryption
 module.exports.createUser = function(newUser, callback) {
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(newUser.password, salt, function(err, hash) {
-            console.log("Password encryption was executed from the model file");
+            // console.log("Password encryption was executed from the model file");
             // Store hash in your password DB. 
             newUser.password = hash;
             newUser.save(callback);
@@ -32,10 +36,13 @@ module.exports.createUser = function(newUser, callback) {
     });
 }
 
-module.exports.getUserByUsername = function(username, callback) {
-    console.log("GetUserByUsername was executed from the model file");
-    var query = {username: username};
-    User.findOne(query, callback);
+module.exports.getUserByUsername = function(in_username, callback) {
+    // console.log("GetUserByUsername was executed from the model file");
+    var query = `{'username': '${in_username}'}`;
+    // console.log(`query is "${query}"`);
+    console.log(User.find(`'username': '${query}'`));
+    // console.log(foundUser);
+    // console.log(`User.password is ${foundUser.password}`);
 }
 
 module.exports.getUserById = function(id, callback) {

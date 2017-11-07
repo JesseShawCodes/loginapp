@@ -2,14 +2,11 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const mongo = require('mongodb');
+const mongo = require('mongodb').mongo;
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-var User =  require('../models/user')
-
-var hash = bcrypt.hashSync('bacon', 10);
-console.log(hash);
+var User =  require('../models/user');
 
 //register route
 router.get('/register', function(req, res) {
@@ -63,31 +60,22 @@ router.post('/register', function(req, res) {
     }
 });
 
-//Local Strategy
-
-passport.serializeUser(function(user, done) {
-    console.log("Serializer was used");
-    done(null, user.id);
-});
-  
-passport.deserializeUser(function(id, done) {
-    console.log("Deserializer was used");    
-    user.getUserById(id, function(err, user) {
-      done(err, user);
-    });
-});
-
+/*
 passport.use(new localStrategy(
     function(username, password, done) {
         console.log("Local Strategy was executed");
-        console.log(`User.password is ${User.password}`)
+        User.find(`{'username': '${username}'}`);
+
         User.getUserByUsername(username, function(err, user) {
             // console.log(`username is ${username}`);
+            // console.log(`User.password is ${User.password}`);
             if (err) throw err;
             if (!user) {
                 return done(null, false, {message: "unknown user"});
             }
         })
+
+        console.log(User.getUserByUsername(username));
         User.comparePassword(password, User.password, function(err, isMatch) {
             // console.log(`User.password is ${User.password}`);
             if (err) throw err;
@@ -100,11 +88,54 @@ passport.use(new localStrategy(
         })
     }
 ));
+*/
+
+passport.use(new localStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
+        if (err) { 
+            return done(err); 
+        }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        User.comparePassword(password, user.password, function(err, isMatch) {
+            // console.log(`User.password is ${User.password}`);
+            if (err) { 
+                return done(err); 
+            }
+            if (isMatch) {
+                console.log("It's a match");
+                return done(null, user);
+            }
+            else {
+                console.log("Invalid Password");
+                return done(null, false, {message: "Invalid Password"});
+            }
+        })
+        return done(null, user);
+      });
+    }
+  ));
+
+//Local Strategy
+
+passport.deserializeUser(function(id, done) {
+    console.log("Deserializer was used");    
+    User.getUserById(id, function(err, user) {
+      done(err, user);
+    });
+});
+
+passport.serializeUser(function(user, done) {
+    console.log("Serializer was used");
+    done(null, user.id);
+});
 
 
 //Post Request to Login
 router.post('/login',
-    passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
+    passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}), 
     function(req, res) {
         console.log("User attempted login");
         res.redirect('/');
