@@ -46,6 +46,7 @@ module.exports.getUserByUsername = function(in_username, callback) {
 }
 
 module.exports.getUserById = function(id, callback) {
+    console.log(callback);
     console.log("GetUserByID was executed from the model file");
     User.findById(id, callback);
 }
@@ -53,7 +54,7 @@ module.exports.getUserById = function(id, callback) {
 module.exports.comparePassword = function(canditatePassword, hash, callback) {
     // Load hash from your password DB.
     console.log("comparePassword was executed from the model file");
-    console.log(`${canditatePassword}, ${hash}, ${callback}`);
+    // console.log(`${canditatePassword}, ${hash}, ${callback}`);
     bcrypt.compare(canditatePassword, hash, function(err, isMatch) {
         console.log(`canditatePassword is ${canditatePassword}`);
         if(err) throw err;

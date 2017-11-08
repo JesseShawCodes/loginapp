@@ -93,6 +93,9 @@ passport.use(new localStrategy(
 passport.use(new localStrategy(
     function(username, password, done) {
       User.findOne({ username: username }, function (err, user) {
+        if (user) {
+            let userPassword = user.password; 
+        }
         if (err) { 
             return done(err); 
         }
@@ -113,7 +116,7 @@ passport.use(new localStrategy(
                 return done(null, false, {message: "Invalid Password"});
             }
         })
-        return done(null, user);
+        // return done(null, user);
       });
     }
   ));
@@ -129,7 +132,7 @@ passport.deserializeUser(function(id, done) {
 
 passport.serializeUser(function(user, done) {
     console.log("Serializer was used");
-    done(null, user.id);
+    return done(null, user.id);
 });
 
 
